@@ -37,6 +37,13 @@ class UsersRepository {
 		return $result;
 	}
 	/**
+	 * Get user resource by username
+	 * @param string $username
+	 */
+	public function findByUsername($username){
+		return $this->tableGateway->select(['username' => $username])->current();
+	}
+	/**
 	 * Insert a new resource
 	 */
 	public function insert($userEntity){

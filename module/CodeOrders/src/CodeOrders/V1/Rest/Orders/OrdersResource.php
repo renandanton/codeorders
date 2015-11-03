@@ -1,19 +1,26 @@
 <?php
-namespace CodeOrders\V1\Rest\Users;
+namespace CodeOrders\V1\Rest\Orders;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
-class UsersResource extends AbstractResourceListener
+class OrdersResource extends AbstractResourceListener
 {
-
 	/**
-	 * @var UsersRepository
+	 * @var OrdersRepository $repository
 	 */
 	private $repository;
+	/**
+	 * @var OrderService $service
+	 */
+	private $service;
 
-	public function __construct(UsersRepository $repository){
+	/**
+	 * Constructor of class
+	 */
+	public function __construct(OrdersRepository $repository, OrdersService $service){
 		$this->repository = $repository;
+		$this->service = $service;
 	}
 
     /**
@@ -35,7 +42,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return $this->repository->delete($id);
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -57,12 +64,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-    	//Todo change this authorization in this controller
-    	$user = $this->repository->findByUsername($this->getIdentity()->getRoleId());
-    	if($user->getRole() == 'salesman')
-    		return new ApiProblem(403, 'The user is not access this info');
-
-        return $this->repository->find($id);
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -73,7 +75,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return $this->repository->findAll();
+        return $this->repository->fecthAll();
     }
 
     /**
@@ -108,6 +110,6 @@ class UsersResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return $this->repository->update($id ,$data);
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }
