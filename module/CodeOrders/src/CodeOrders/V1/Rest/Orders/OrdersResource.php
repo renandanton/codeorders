@@ -31,7 +31,11 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return $this->repository->insert($data);
+        $result =  $this->service->insert($data);
+        if($result == 'error')
+        	return new ApiProblem(405, 'Error processing order');
+        else
+        	return $result;
     }
 
     /**

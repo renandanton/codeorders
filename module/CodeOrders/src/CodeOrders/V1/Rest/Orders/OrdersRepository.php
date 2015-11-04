@@ -43,10 +43,18 @@ class OrdersRepository {
 	}
 	/**
 	 * Insert a new resource
-	 * @param stdClass $data
+	 * @param array $data
 	 */
-	public function insert($data){
-		return $this->tableGateway->insert((array)$data);
+	public function insert(array $data){
+		$this->tableGateway->insert($data);
+		$id = $this->tableGateway->getLastInsertValue();
+		return $id;
+	}
+	/**
+	 * Return $tableGateway
+	 */
+	public function getTableGateway(){
+		return $this->tableGateway;
 	}
 }
 
