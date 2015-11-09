@@ -11,9 +11,10 @@ The codes here added part of the course <a href="http://sites.code.education/tri
 Backend module in Apigility
 ----------------
 
-**Project: Code Orders**
+**Project: CodeOrders**
 
-Descrição do projeto, para concluir
+
+Project Description to complete
 
 **Steps**
 
