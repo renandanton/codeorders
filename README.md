@@ -1,7 +1,7 @@
 CodeOrders
 =======================
 
-Project: Backend | ZF2-Apigility Module
+:book: Project: Backend | ZF2-Apigility Module
 
 Study on the Framework ZF2-Apigility
 --------------------------------------
@@ -23,7 +23,7 @@ Descrição do projeto, para concluir
 
 > git clone https://github.com/renandanton/codeorders.git
 
-> cd CodeOrders
+> cd codeorders
 
 > php -S 127.0.0.1:8080 -t public public/index.php
 
