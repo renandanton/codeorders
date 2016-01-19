@@ -14,10 +14,10 @@ class ProductsRepositoryFactory implements FactoryInterface {
 	public function createService( \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator ) {
 	// TODO Auto-generated method stub
 		$dbAdapter = $serviceLocator->get('DbAdapter');
-		//$usersMapper = new UsersMapper();
 		$hydrator = new HydratingResultSet(new ClassMethods(), new ProductsEntity());
 		$tableGateway = new TableGateway('products', $dbAdapter, null, $hydrator);
-		$productsRepository = new ProductsRepository($tableGateway);
+		$userRepository = $serviceLocator->get('CodeOrders\\V1\\Rest\\Users\\UsersRepository');
+		$productsRepository = new ProductsRepository($tableGateway,$userRepository);
 
 		return $productsRepository;
 	}

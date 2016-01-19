@@ -5,6 +5,7 @@ namespace CodeOrders\V1\Rest\Orders;
 use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Stdlib\Hydrator\ClassMethods;
 use Zend\Paginator\Adapter\ArrayAdapter;
+use CodeOrders\V1\Rest\Users\UsersRepository;
 class OrdersRepository {
 	/**
 	 * @var $tableGateway
@@ -15,13 +16,18 @@ class OrdersRepository {
 	 */
 	private $orderItemTableGateway;
 	/**
+	 * @var $userRepository
+	 */
+	private $userRepository;
+	/**
 	 * Constructor of class
 	 * @param AbstractTableGateway $tableGataway
 	 * @param AbstractTableGateway $orderItemTableGateway
 	 */
-	public function __construct(AbstractTableGateway $tableGataway, AbstractTableGateway $orderItemTableGateway){
+	public function __construct(AbstractTableGateway $tableGataway, AbstractTableGateway $orderItemTableGateway, UsersRepository $userRepository){
 		$this->tableGateway = $tableGataway;
 		$this->orderItemTableGateway = $orderItemTableGateway;
+		$this->userRepository = $userRepository;
 	}
 	/**
 	 * List of all orders resources
@@ -50,6 +56,23 @@ class OrdersRepository {
 		$id = $this->tableGateway->getLastInsertValue();
 		return $id;
 	}
+	/**
+	 * Get user resource by username
+	 * @param string $username
+	 */
+	public function findByUserName($username){
+	  return $this->userRepository->findByUsername($username);
+	}
+	
+	/**
+	 * Find orders of a  salasman
+	 * @param int $id
+	 * @param int $userId
+	 */
+	public function findByUserAndOrder($id,$userId){
+	 return $this->tableGateway->select(['id' => $id, 'user_id' => $userId]);   
+	}
+	
 	/**
 	 * Return $tableGateway
 	 */

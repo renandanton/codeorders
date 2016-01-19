@@ -20,15 +20,6 @@ return array(
                     ),
                 ),
             ),
-            'code-orders.rest.clients' => array(
-                'type' => 'Segment',
-                'options' => array(
-                    'route' => '/clients[/:clients_id]',
-                    'defaults' => array(
-                        'controller' => 'CodeOrders\\V1\\Rest\\Clients\\Controller',
-                    ),
-                ),
-            ),
             'code-orders.rest.products' => array(
                 'type' => 'Segment',
                 'options' => array(
@@ -47,15 +38,64 @@ return array(
                     ),
                 ),
             ),
+            'code-orders.rest.oauth-access-tokens' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/oauth_access_tokens[/:oauth_access_tokens_id]',
+                    'defaults' => array(
+                        'controller' => 'CodeOrders\\V1\\Rest\\OauthAccessTokens\\Controller',
+                    ),
+                ),
+            ),
+            'code-orders.rest.oauth-jwt' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/oauth_jwt[/:oauth_jwt_id]',
+                    'defaults' => array(
+                        'controller' => 'CodeOrders\\V1\\Rest\\OauthJwt\\Controller',
+                    ),
+                ),
+            ),
+            'code-orders.rest.oauth-scopes' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/oauth_scopes[/:oauth_scopes_id]',
+                    'defaults' => array(
+                        'controller' => 'CodeOrders\\V1\\Rest\\OauthScopes\\Controller',
+                    ),
+                ),
+            ),
+            'code-orders.rest.textx' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/textx[/:textx_id]',
+                    'defaults' => array(
+                        'controller' => 'CodeOrders\\V1\\Rest\\Textx\\Controller',
+                    ),
+                ),
+            ),
+            'code-orders.rest.clients' => array(
+                'type' => 'Segment',
+                'options' => array(
+                    'route' => '/clients[/:clients_id]',
+                    'defaults' => array(
+                        'controller' => 'CodeOrders\\V1\\Rest\\Clients\\Controller',
+                    ),
+                ),
+            ),
         ),
     ),
     'zf-versioning' => array(
         'uri' => array(
             0 => 'code-orders.rest.ptypes',
             1 => 'code-orders.rest.users',
-            2 => 'code-orders.rest.clients',
             3 => 'code-orders.rest.products',
             4 => 'code-orders.rest.orders',
+            5 => 'code-orders.rest.oauth-access-tokens',
+            6 => 'code-orders.rest.oauth-jwt',
+            7 => 'code-orders.rest.oauth-scopes',
+            8 => 'code-orders.rest.textx',
+            9 => 'code-orders.rest.clients',
         ),
     ),
     'zf-rest' => array(
@@ -103,28 +143,6 @@ return array(
             'collection_class' => 'CodeOrders\\V1\\Rest\\Users\\UsersCollection',
             'service_name' => 'users',
         ),
-        'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
-            'listener' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsResource',
-            'route_name' => 'code-orders.rest.clients',
-            'route_identifier_name' => 'clients_id',
-            'collection_name' => 'clients',
-            'entity_http_methods' => array(
-                0 => 'GET',
-                1 => 'PATCH',
-                2 => 'PUT',
-                3 => 'DELETE',
-            ),
-            'collection_http_methods' => array(
-                0 => 'GET',
-                1 => 'POST',
-            ),
-            'collection_query_whitelist' => array(),
-            'page_size' => 25,
-            'page_size_param' => null,
-            'entity_class' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsEntity',
-            'collection_class' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsCollection',
-            'service_name' => 'clients',
-        ),
         'CodeOrders\\V1\\Rest\\Products\\Controller' => array(
             'listener' => 'CodeOrders\\V1\\Rest\\Products\\ProductsResource',
             'route_name' => 'code-orders.rest.products',
@@ -141,7 +159,7 @@ return array(
                 1 => 'POST',
             ),
             'collection_query_whitelist' => array(),
-            'page_size' => '1',
+            'page_size' => '25',
             'page_size_param' => null,
             'entity_class' => 'CodeOrders\\V1\\Rest\\Products\\ProductsEntity',
             'collection_class' => 'CodeOrders\\V1\\Rest\\Products\\ProductsCollection',
@@ -169,14 +187,128 @@ return array(
             'collection_class' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersCollection',
             'service_name' => 'Orders',
         ),
+        'CodeOrders\\V1\\Rest\\OauthClients\\Controller' => array(
+            'listener' => 'CodeOrders\\V1\\Rest\\OauthClients\\OauthClientsResource',
+            'route_name' => 'code-orders.rest.oauth-clients',
+            'route_identifier_name' => 'oauth_clients_id',
+            'collection_name' => 'oauth_clients',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'CodeOrders\\V1\\Rest\\OauthClients\\OauthClientsEntity',
+            'collection_class' => 'CodeOrders\\V1\\Rest\\OauthClients\\OauthClientsCollection',
+            'service_name' => 'oauth_clients',
+        ),
+        'CodeOrders\\V1\\Rest\\OauthJwt\\Controller' => array(
+            'listener' => 'CodeOrders\\V1\\Rest\\OauthJwt\\OauthJwtResource',
+            'route_name' => 'code-orders.rest.oauth-jwt',
+            'route_identifier_name' => 'oauth_jwt_id',
+            'collection_name' => 'oauth_jwt',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'CodeOrders\\V1\\Rest\\OauthJwt\\OauthJwtEntity',
+            'collection_class' => 'CodeOrders\\V1\\Rest\\OauthJwt\\OauthJwtCollection',
+            'service_name' => 'oauth_jwt',
+        ),
+        'CodeOrders\\V1\\Rest\\OauthScopes\\Controller' => array(
+            'listener' => 'CodeOrders\\V1\\Rest\\OauthScopes\\OauthScopesResource',
+            'route_name' => 'code-orders.rest.oauth-scopes',
+            'route_identifier_name' => 'oauth_scopes_id',
+            'collection_name' => 'oauth_scopes',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'CodeOrders\\V1\\Rest\\OauthScopes\\OauthScopesEntity',
+            'collection_class' => 'CodeOrders\\V1\\Rest\\OauthScopes\\OauthScopesCollection',
+            'service_name' => 'oauth_scopes',
+        ),
+        'CodeOrders\\V1\\Rest\\Textx\\Controller' => array(
+            'listener' => 'CodeOrders\\V1\\Rest\\Textx\\TextxResource',
+            'route_name' => 'code-orders.rest.textx',
+            'route_identifier_name' => 'textx_id',
+            'collection_name' => 'textx',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'CodeOrders\\V1\\Rest\\Textx\\TextxEntity',
+            'collection_class' => 'CodeOrders\\V1\\Rest\\Textx\\TextxCollection',
+            'service_name' => 'textx',
+        ),
+        'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
+            'listener' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsResource',
+            'route_name' => 'code-orders.rest.clients',
+            'route_identifier_name' => 'clients_id',
+            'collection_name' => 'clients',
+            'entity_http_methods' => array(
+                0 => 'GET',
+                1 => 'PATCH',
+                2 => 'PUT',
+                3 => 'DELETE',
+            ),
+            'collection_http_methods' => array(
+                0 => 'GET',
+                1 => 'POST',
+            ),
+            'collection_query_whitelist' => array(),
+            'page_size' => 25,
+            'page_size_param' => null,
+            'entity_class' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsEntity',
+            'collection_class' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsCollection',
+            'service_name' => 'clients',
+        ),
     ),
     'zf-content-negotiation' => array(
         'controllers' => array(
             'CodeOrders\\V1\\Rest\\Ptypes\\Controller' => 'HalJson',
             'CodeOrders\\V1\\Rest\\Users\\Controller' => 'HalJson',
-            'CodeOrders\\V1\\Rest\\Clients\\Controller' => 'HalJson',
             'CodeOrders\\V1\\Rest\\Products\\Controller' => 'HalJson',
             'CodeOrders\\V1\\Rest\\Orders\\Controller' => 'HalJson',
+            'CodeOrders\\V1\\Rest\\OauthClients\\Controller' => 'HalJson',
+            'CodeOrders\\V1\\Rest\\OauthJwt\\Controller' => 'HalJson',
+            'CodeOrders\\V1\\Rest\\OauthScopes\\Controller' => 'HalJson',
+            'CodeOrders\\V1\\Rest\\Textx\\Controller' => 'HalJson',
+            'CodeOrders\\V1\\Rest\\Clients\\Controller' => 'HalJson',
         ),
         'accept_whitelist' => array(
             'CodeOrders\\V1\\Rest\\Ptypes\\Controller' => array(
@@ -189,17 +321,37 @@ return array(
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
-            'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
-                0 => 'application/vnd.code-orders.v1+json',
-                1 => 'application/hal+json',
-                2 => 'application/json',
-            ),
             'CodeOrders\\V1\\Rest\\Products\\Controller' => array(
                 0 => 'application/vnd.code-orders.v1+json',
                 1 => 'application/hal+json',
                 2 => 'application/json',
             ),
             'CodeOrders\\V1\\Rest\\Orders\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthClients\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthJwt\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthScopes\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\Textx\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/hal+json',
+                2 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
                 0 => 'application/vnd.code-orders.v1+json',
                 1 => 'application/hal+json',
                 2 => 'application/json',
@@ -214,15 +366,31 @@ return array(
                 0 => 'application/vnd.code-orders.v1+json',
                 1 => 'application/json',
             ),
-            'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
-                0 => 'application/vnd.code-orders.v1+json',
-                1 => 'application/json',
-            ),
             'CodeOrders\\V1\\Rest\\Products\\Controller' => array(
                 0 => 'application/vnd.code-orders.v1+json',
                 1 => 'application/json',
             ),
             'CodeOrders\\V1\\Rest\\Orders\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthClients\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthJwt\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthScopes\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\Textx\\Controller' => array(
+                0 => 'application/vnd.code-orders.v1+json',
+                1 => 'application/json',
+            ),
+            'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
                 0 => 'application/vnd.code-orders.v1+json',
                 1 => 'application/json',
             ),
@@ -266,18 +434,6 @@ return array(
                 'route_identifier_name' => 'users_id',
                 'is_collection' => true,
             ),
-            'CodeOrders\\V1\\Rest\\Clients\\ClientsEntity' => array(
-                'entity_identifier_name' => 'id',
-                'route_name' => 'code-orders.rest.clients',
-                'route_identifier_name' => 'clients_id',
-                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
-            ),
-            'CodeOrders\\V1\\Rest\\Clients\\ClientsCollection' => array(
-                'entity_identifier_name' => 'id',
-                'route_name' => 'code-orders.rest.clients',
-                'route_identifier_name' => 'clients_id',
-                'is_collection' => true,
-            ),
             'CodeOrders\\V1\\Rest\\Products\\ProductsEntity' => array(
                 'entity_identifier_name' => 'id',
                 'route_name' => 'code-orders.rest.products',
@@ -302,6 +458,66 @@ return array(
                 'route_identifier_name' => 'orders_id',
                 'is_collection' => true,
             ),
+            'CodeOrders\\V1\\Rest\\OauthClients\\OauthClientsEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.oauth-clients',
+                'route_identifier_name' => 'oauth_clients_id',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthClients\\OauthClientsCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.oauth-clients',
+                'route_identifier_name' => 'oauth_clients_id',
+                'is_collection' => true,
+            ),
+            'CodeOrders\\V1\\Rest\\OauthJwt\\OauthJwtEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.oauth-jwt',
+                'route_identifier_name' => 'oauth_jwt_id',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthJwt\\OauthJwtCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.oauth-jwt',
+                'route_identifier_name' => 'oauth_jwt_id',
+                'is_collection' => true,
+            ),
+            'CodeOrders\\V1\\Rest\\OauthScopes\\OauthScopesEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.oauth-scopes',
+                'route_identifier_name' => 'oauth_scopes_id',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthScopes\\OauthScopesCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.oauth-scopes',
+                'route_identifier_name' => 'oauth_scopes_id',
+                'is_collection' => true,
+            ),
+            'CodeOrders\\V1\\Rest\\Textx\\TextxEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.textx',
+                'route_identifier_name' => 'textx_id',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+            ),
+            'CodeOrders\\V1\\Rest\\Textx\\TextxCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.textx',
+                'route_identifier_name' => 'textx_id',
+                'is_collection' => true,
+            ),
+            'CodeOrders\\V1\\Rest\\Clients\\ClientsEntity' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.clients',
+                'route_identifier_name' => 'clients_id',
+                'hydrator' => 'Zend\\Stdlib\\Hydrator\\ClassMethods',
+            ),
+            'CodeOrders\\V1\\Rest\\Clients\\ClientsCollection' => array(
+                'entity_identifier_name' => 'id',
+                'route_name' => 'code-orders.rest.clients',
+                'route_identifier_name' => 'clients_id',
+                'is_collection' => true,
+            ),
         ),
     ),
     'zf-apigility' => array(
@@ -320,11 +536,32 @@ return array(
                 'controller_service_name' => 'CodeOrders\\V1\\Rest\\Ptypes\\Controller',
                 'entity_identifier_name' => 'id',
             ),
-            'CodeOrders\\V1\\Rest\\Clients\\ClientsResource' => array(
+            'CodeOrders\\V1\\Rest\\OauthClients\\OauthClientsResource' => array(
                 'adapter_name' => 'DbAdapter',
-                'table_name' => 'clients',
+                'table_name' => 'oauth_clients',
                 'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
-                'controller_service_name' => 'CodeOrders\\V1\\Rest\\Clients\\Controller',
+                'controller_service_name' => 'CodeOrders\\V1\\Rest\\OauthClients\\Controller',
+                'entity_identifier_name' => 'id',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthJwt\\OauthJwtResource' => array(
+                'adapter_name' => 'DbAdapter',
+                'table_name' => 'oauth_jwt',
+                'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'controller_service_name' => 'CodeOrders\\V1\\Rest\\OauthJwt\\Controller',
+                'entity_identifier_name' => 'id',
+            ),
+            'CodeOrders\\V1\\Rest\\OauthScopes\\OauthScopesResource' => array(
+                'adapter_name' => 'DbAdapter',
+                'table_name' => 'oauth_scopes',
+                'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'controller_service_name' => 'CodeOrders\\V1\\Rest\\OauthScopes\\Controller',
+                'entity_identifier_name' => 'id',
+            ),
+            'CodeOrders\\V1\\Rest\\Textx\\TextxResource' => array(
+                'adapter_name' => 'DbAdapter',
+                'table_name' => 'textx',
+                'hydrator_name' => 'Zend\\Stdlib\\Hydrator\\ArraySerializable',
+                'controller_service_name' => 'CodeOrders\\V1\\Rest\\Textx\\Controller',
                 'entity_identifier_name' => 'id',
             ),
         ),
@@ -333,8 +570,17 @@ return array(
         'CodeOrders\\V1\\Rest\\Ptypes\\Controller' => array(
             'input_filter' => 'CodeOrders\\V1\\Rest\\Ptypes\\Validator',
         ),
-        'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
-            'input_filter' => 'CodeOrders\\V1\\Rest\\Clients\\Validator',
+        'CodeOrders\\V1\\Rest\\OauthJwt\\Controller' => array(
+            'input_filter' => 'CodeOrders\\V1\\Rest\\OauthJwt\\Validator',
+        ),
+        'CodeOrders\\V1\\Rest\\OauthClients\\Controller' => array(
+            'input_filter' => 'CodeOrders\\V1\\Rest\\OauthClients\\Validator',
+        ),
+        'CodeOrders\\V1\\Rest\\OauthScopes\\Controller' => array(
+            'input_filter' => 'CodeOrders\\V1\\Rest\\OauthScopes\\Validator',
+        ),
+        'CodeOrders\\V1\\Rest\\Textx\\Controller' => array(
+            'input_filter' => 'CodeOrders\\V1\\Rest\\Textx\\Validator',
         ),
     ),
     'input_filter_specs' => array(
@@ -1177,7 +1423,69 @@ return array(
         ),
         'CodeOrders\\V1\\Rest\\Clients\\Validator' => array(
             0 => array(
-                'name' => 'name',
+                'required' => true,
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => '2',
+                            'max' => '2',
+                        ),
+                    ),
+                ),
+                'filters' => array(),
+                'name' => 'state',
+                'description' => 'State of country',
+                'error_message' => 'The state field must be has two chars and not empty!',
+            ),
+        ),
+        'CodeOrders\\V1\\Rest\\OauthJwt\\Validator' => array(
+            0 => array(
+                'name' => 'subject',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '80',
+                        ),
+                    ),
+                ),
+            ),
+            1 => array(
+                'name' => 'public_key',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '2000',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'CodeOrders\\V1\\Rest\\OauthClients\\Validator' => array(
+            0 => array(
+                'name' => 'client_secret',
                 'required' => true,
                 'filters' => array(
                     0 => array(
@@ -1192,13 +1500,177 @@ return array(
                         'name' => 'Zend\\Validator\\StringLength',
                         'options' => array(
                             'min' => 1,
-                            'max' => '60',
+                            'max' => '80',
                         ),
                     ),
                 ),
             ),
             1 => array(
-                'name' => 'document',
+                'name' => 'redirect_uri',
+                'required' => true,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '2000',
+                        ),
+                    ),
+                ),
+            ),
+            2 => array(
+                'name' => 'grant_types',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '80',
+                        ),
+                    ),
+                ),
+            ),
+            3 => array(
+                'name' => 'scope',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '2000',
+                        ),
+                    ),
+                ),
+            ),
+            4 => array(
+                'name' => 'user_id',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '255',
+                        ),
+                    ),
+                ),
+            ),
+        ),
+        'CodeOrders\\V1\\Rest\\OauthScopes\\Validator' => array(
+            0 => array(
+                'name' => 'type',
+                'required' => true,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '255',
+                        ),
+                    ),
+                ),
+            ),
+            1 => array(
+                'name' => 'scope',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '2000',
+                        ),
+                    ),
+                ),
+            ),
+            2 => array(
+                'name' => 'client_id',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StringTrim',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                ),
+                'validators' => array(
+                    0 => array(
+                        'name' => 'Zend\\Validator\\StringLength',
+                        'options' => array(
+                            'min' => 1,
+                            'max' => '80',
+                        ),
+                    ),
+                ),
+            ),
+            3 => array(
+                'name' => 'is_default',
+                'required' => false,
+                'filters' => array(
+                    0 => array(
+                        'name' => 'Zend\\Filter\\StripTags',
+                    ),
+                    1 => array(
+                        'name' => 'Zend\\Filter\\Digits',
+                    ),
+                ),
+                'validators' => array(),
+            ),
+        ),
+        'CodeOrders\\V1\\Rest\\Textx\\Validator' => array(
+            0 => array(
+                'name' => 'name',
                 'required' => true,
                 'filters' => array(
                     0 => array(
@@ -1218,144 +1690,6 @@ return array(
                     ),
                 ),
             ),
-            2 => array(
-                'name' => 'address',
-                'required' => true,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => 1,
-                            'max' => '200',
-                        ),
-                    ),
-                ),
-            ),
-            3 => array(
-                'name' => 'zipcode',
-                'required' => true,
-                'filters' => array(),
-                'validators' => array(),
-            ),
-            4 => array(
-                'name' => 'city',
-                'required' => true,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => 1,
-                            'max' => '60',
-                        ),
-                    ),
-                ),
-            ),
-            5 => array(
-                'name' => 'state',
-                'required' => true,
-                'filters' => array(),
-                'validators' => array(),
-            ),
-            6 => array(
-                'name' => 'responsible',
-                'required' => true,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => 1,
-                            'max' => '60',
-                        ),
-                    ),
-                ),
-            ),
-            7 => array(
-                'name' => 'email',
-                'required' => true,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => 1,
-                            'max' => '100',
-                        ),
-                    ),
-                ),
-            ),
-            8 => array(
-                'name' => 'phone',
-                'required' => true,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => 1,
-                            'max' => '15',
-                        ),
-                    ),
-                ),
-            ),
-            9 => array(
-                'name' => 'obs',
-                'required' => false,
-                'filters' => array(
-                    0 => array(
-                        'name' => 'Zend\\Filter\\StringTrim',
-                    ),
-                    1 => array(
-                        'name' => 'Zend\\Filter\\StripTags',
-                    ),
-                ),
-                'validators' => array(
-                    0 => array(
-                        'name' => 'Zend\\Validator\\StringLength',
-                        'options' => array(
-                            'min' => 1,
-                            'max' => '65535',
-                        ),
-                    ),
-                ),
-            ),
         ),
     ),
     'service_manager' => array(
@@ -1366,8 +1700,11 @@ return array(
             'CodeOrders\\V1\\Rest\\Products\\ProductsRepository' => 'CodeOrders\\V1\\Rest\\Products\\ProductsRepositoryFactory',
             'CodeOrders\\V1\\Rest\\Orders\\OrdersResource' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersResourceFactory',
             'CodeOrders\\V1\\Rest\\Orders\\OrdersRepository' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersRepositoryFactory',
-        	'CodeOrders\\V1\\Rest\\Orders\\OrdersService' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersServiceFactory',
+            'CodeOrders\\V1\\Rest\\Orders\\OrdersService' => 'CodeOrders\\V1\\Rest\\Orders\\OrdersServiceFactory',
             'CodeOrders\\V1\\Rest\\Orders\\OrderItemTableGataway' => 'CodeOrders\\V1\\Rest\\Orders\\OrderItemTableGatewayFactory',
+            'CodeOrders\\V1\\Rest\\Clients\\ClientsResource' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsResourceFactory',
+            'CodeOrders\\V1\\Rest\\Clients\\ClientsRepository' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsRepositoryFactory',
+            'CodeOrders\\V1\\Rest\\Clients\\ClientsService' => 'CodeOrders\\V1\\Rest\\Clients\\ClientsServiceFactory',
         ),
     ),
     'zf-mvc-auth' => array(
@@ -1385,6 +1722,54 @@ return array(
                     'POST' => false,
                     'PUT' => true,
                     'PATCH' => true,
+                    'DELETE' => true,
+                ),
+            ),
+            'CodeOrders\\V1\\Rest\\Orders\\Controller' => array(
+                'collection' => array(
+                    'GET' => true,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => true,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => true,
+                    'DELETE' => true,
+                ),
+            ),
+            'CodeOrders\\V1\\Rest\\Clients\\Controller' => array(
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => false,
+                    'DELETE' => true,
+                ),
+            ),
+            'CodeOrders\\V1\\Rest\\Products\\Controller' => array(
+                'collection' => array(
+                    'GET' => false,
+                    'POST' => true,
+                    'PUT' => false,
+                    'PATCH' => false,
+                    'DELETE' => false,
+                ),
+                'entity' => array(
+                    'GET' => false,
+                    'POST' => false,
+                    'PUT' => true,
+                    'PATCH' => false,
                     'DELETE' => true,
                 ),
             ),

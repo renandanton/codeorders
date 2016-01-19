@@ -28,6 +28,10 @@ class ProductsResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
+        if($user->getRole() != 'admin')
+            return new ApiProblem(403, 'Only admin can create products.' );
+        
         return $this->repository->insert($data);
     }
 
@@ -39,6 +43,10 @@ class ProductsResource extends AbstractResourceListener
      */
     public function delete($id)
     {
+        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
+        if($user->getRole() != 'admin')
+            return new ApiProblem(403, 'Only admin can delete products.' );
+        
         return $this->repository->delete($id);
     }
 
@@ -107,6 +115,10 @@ class ProductsResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
+        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
+        if($user->getRole() != 'admin')
+            return new ApiProblem(403, 'Only admin can update products.' );
+        
         return $this->repository->update($id, $data);
     }
 }

@@ -19,7 +19,7 @@ return array(
     'zf-mvc-auth' => array(
         'authentication' => array(
             'map' => array(
-                'CodeOrders\\V1' => 'oauth2adapter',
+                'CodeOrders\\V1' => 'oauth_adapter',
             ),
         ),
     ),

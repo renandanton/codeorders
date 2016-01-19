@@ -4,6 +4,7 @@ namespace CodeOrders\V1\Rest\Orders;
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
 
+
 class OrdersResource extends AbstractResourceListener
 {
 	/**
@@ -31,6 +32,10 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
+        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId()); 
+        if(!$this->service->isSalesman($user->getRole()))
+            return new ApiProblem(403, 'Only salesman can create orders.' );
+        
         $result =  $this->service->insert($data);
         if($result == 'error')
         	return new ApiProblem(405, 'Error processing order');
@@ -68,7 +73,12 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
+        if(!$this->service->isSalesman($user->getRole()))
+            return new ApiProblem(415, 'Only salesman can list your own orders.' );
+        
+        return $this->service->fetch($id, $user->getId());
+ 
     }
 
     /**
@@ -79,7 +89,11 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return $this->repository->fecthAll();
+        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
+        if(!$this->service->isAdmin($user->getRole()))
+            return new ApiProblem(415, 'Only admin can see all orders.' );
+        
+       return  $this->service->fetchAll();
     }
 
     /**

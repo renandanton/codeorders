@@ -57,11 +57,12 @@ class UsersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-    	//Todo change this authorization in this controller
-    	$user = $this->repository->findByUsername($this->getIdentity()->getRoleId());
-    	if($user->getRole() == 'salesman')
-    		return new ApiProblem(403, 'The user is not access this info');
 
+    	$user = $this->repository->findByUsername($this->getIdentity()->getRoleId());
+    	
+    	if($user->getRole() == 'salesman')
+    		return new ApiProblem(403, 'The user is not has access this info');
+    	
         return $this->repository->find($id);
     }
 
