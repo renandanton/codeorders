@@ -3,6 +3,7 @@ namespace CodeOrders\V1\Rest\Products;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use CodeOrders\V1\Rest\Users\UsersService;
 
 class ProductsResource extends AbstractResourceListener
 {
@@ -11,13 +12,19 @@ class ProductsResource extends AbstractResourceListener
 	 * @param ProductsRepository $repository
 	 */
 	private $repository;
+	/**
+	 *
+	 * @param UserService $repository
+	 */
+	private $userService;
 
 	/**
 	 * Constructor of class
 	 * @param ProductsRepository $repository
 	 */
-	public function __construct(ProductsRepository $repository){
+	public function __construct(ProductsRepository $repository, UsersService $userService){
 		$this->repository = $repository;
+		$this->userService = $userService;
 	}
 
     /**
@@ -28,8 +35,7 @@ class ProductsResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
-        if($user->getRole() != 'admin')
+        if(!$this->userService->isAdmin())
             return new ApiProblem(403, 'Only admin can create products.' );
         
         return $this->repository->insert($data);
@@ -43,8 +49,7 @@ class ProductsResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
-        if($user->getRole() != 'admin')
+        if(!$this->userService->isAdmin())
             return new ApiProblem(403, 'Only admin can delete products.' );
         
         return $this->repository->delete($id);
@@ -115,8 +120,7 @@ class ProductsResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
-        if($user->getRole() != 'admin')
+         if(!$this->userService->isAdmin())
             return new ApiProblem(403, 'Only admin can update products.' );
         
         return $this->repository->update($id, $data);

@@ -16,8 +16,7 @@ class ProductsRepositoryFactory implements FactoryInterface {
 		$dbAdapter = $serviceLocator->get('DbAdapter');
 		$hydrator = new HydratingResultSet(new ClassMethods(), new ProductsEntity());
 		$tableGateway = new TableGateway('products', $dbAdapter, null, $hydrator);
-		$userRepository = $serviceLocator->get('CodeOrders\\V1\\Rest\\Users\\UsersRepository');
-		$productsRepository = new ProductsRepository($tableGateway,$userRepository);
+		$productsRepository = new ProductsRepository($tableGateway);
 
 		return $productsRepository;
 	}

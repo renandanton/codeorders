@@ -5,6 +5,8 @@ class ProductsResourceFactory
 {
     public function __invoke($services)
     {
-        return new ProductsResource($services->get("CodeOrders\\V1\\Rest\\Products\\ProductsRepository"));
+        $repository = $services->get("CodeOrders\\V1\\Rest\\Products\\ProductsRepository");
+        $userService = $services->get("CodeOrders\\V1\\Rest\\Users\\UsersService");
+        return new ProductsResource($repository, $userService);
     }
 }

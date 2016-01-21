@@ -16,18 +16,13 @@ class OrdersRepository {
 	 */
 	private $orderItemTableGateway;
 	/**
-	 * @var $userRepository
-	 */
-	private $userRepository;
-	/**
 	 * Constructor of class
 	 * @param AbstractTableGateway $tableGataway
 	 * @param AbstractTableGateway $orderItemTableGateway
 	 */
-	public function __construct(AbstractTableGateway $tableGataway, AbstractTableGateway $orderItemTableGateway, UsersRepository $userRepository){
+	public function __construct(AbstractTableGateway $tableGataway, AbstractTableGateway $orderItemTableGateway){
 		$this->tableGateway = $tableGataway;
 		$this->orderItemTableGateway = $orderItemTableGateway;
-		$this->userRepository = $userRepository;
 	}
 	/**
 	 * List of all orders resources
@@ -55,13 +50,6 @@ class OrdersRepository {
 		$this->tableGateway->insert($data);
 		$id = $this->tableGateway->getLastInsertValue();
 		return $id;
-	}
-	/**
-	 * Get user resource by username
-	 * @param string $username
-	 */
-	public function findByUserName($username){
-	  return $this->userRepository->findByUsername($username);
 	}
 	
 	/**

@@ -95,28 +95,6 @@ class OrdersService {
 	    return $ordersCollection;
 	}
 	
-	
-	/**
-	 * Method check if user is salesman 
-	 * @param string $role
-	 */
-	 public function isSalesman($role){
-	     if($role == 'salesman')
-	        return true;
-	     else
-	         return false;
-	 }
-	 
-	 /**
-	  * Method check if user is admin
-	  * @param string $role
-	  */
-	 public function isAdmin($role){
-	     if($role == 'admin')
-	         return true;
-	     else
-	         return false;
-	 }
 }
 
 ?>

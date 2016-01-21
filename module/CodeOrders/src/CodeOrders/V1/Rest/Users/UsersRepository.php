@@ -40,7 +40,7 @@ class UsersRepository {
 	 * Get user resource by username
 	 * @param string $username
 	 */
-	public function findByUsername($username){
+	public function findByUserName($username){
 		return $this->tableGateway->select(['username' => $username])->current();
 	}
 	/**

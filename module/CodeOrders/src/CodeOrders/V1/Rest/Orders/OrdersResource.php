@@ -3,6 +3,8 @@ namespace CodeOrders\V1\Rest\Orders;
 
 use ZF\ApiProblem\ApiProblem;
 use ZF\Rest\AbstractResourceListener;
+use CodeOrders\V1\Rest\Users\UsersService;
+
 
 
 class OrdersResource extends AbstractResourceListener
@@ -12,16 +14,22 @@ class OrdersResource extends AbstractResourceListener
 	 */
 	private $repository;
 	/**
-	 * @var OrderService $service
+	 * @var OrderService $orderService
 	 */
-	private $service;
+	private $orderService;
+	/**
+	 * @var UserService $userService
+	 */
+	private $userService;
+	
 
 	/**
 	 * Constructor of class
 	 */
-	public function __construct(OrdersRepository $repository, OrdersService $service){
+	public function __construct(OrdersRepository $repository, OrdersService $orderService, UsersService $userService){
 		$this->repository = $repository;
-		$this->service = $service;
+		$this->orderService = $orderService;
+		$this->userService = $userService;
 	}
 
     /**
@@ -32,11 +40,11 @@ class OrdersResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId()); 
-        if(!$this->service->isSalesman($user->getRole()))
+     
+        if(!$this->userService->isSalesMan())
             return new ApiProblem(403, 'Only salesman can create orders.' );
         
-        $result =  $this->service->insert($data);
+        $result =  $this->orderService->insert($data);
         if($result == 'error')
         	return new ApiProblem(405, 'Error processing order');
         else
@@ -73,11 +81,12 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
-        if(!$this->service->isSalesman($user->getRole()))
+      $user = $this->userService->getUserInfo();
+
+      if(!$this->userService->isSalesMan())
             return new ApiProblem(415, 'Only salesman can list your own orders.' );
-        
-        return $this->service->fetch($id, $user->getId());
+
+       return $this->orderService->fetch($id, $user->getId());
  
     }
 
@@ -89,11 +98,10 @@ class OrdersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        $user = $this->repository->findByUserName($this->getIdentity()->getRoleId());
-        if(!$this->service->isAdmin($user->getRole()))
+      if(!$this->userService->isSalesMan())
             return new ApiProblem(415, 'Only admin can see all orders.' );
         
-       return  $this->service->fetchAll();
+       return  $this->orderService->fetchAll();
     }
 
     /**

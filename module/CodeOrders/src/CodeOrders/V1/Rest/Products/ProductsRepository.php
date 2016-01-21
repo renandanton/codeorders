@@ -12,18 +12,13 @@ class ProductsRepository {
 	 * @var TableGatewayInterface
 	 */
 	private $tableGateway;
-	/**
-	 * @var userRepository $userRepository
-	 */
-	private $userRepository;
 
 	/**
 	 * Constructor of class
 	 * @param TableGatewayInterface $tableGateway
 	 */
-	public function __construct(TableGatewayInterface $tableGateway, UsersRepository $userRepository){
+	public function __construct(TableGatewayInterface $tableGateway){
 		$this->tableGateway = $tableGateway;
-		$this->userRepository = $userRepository;
 	}
 	/**
 	 * List all resources
@@ -41,13 +36,6 @@ class ProductsRepository {
 		$resultSet = $this->tableGateway->select(['id' => (int)$id]);
 		$result = $resultSet->current();
 		return $result;
-	}
-	/**
-	 * Get user resource by username
-	 * @param string $username
-	 */
-	public function findByUserName($username){
-	    return $this->userRepository->findByUsername($username);
 	}
 	/**
 	 * Insert a product resource

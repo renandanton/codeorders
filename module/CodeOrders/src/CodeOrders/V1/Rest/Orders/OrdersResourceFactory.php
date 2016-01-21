@@ -7,6 +7,7 @@ class OrdersResourceFactory
     {
     	$ordersRepository = $services->get('CodeOrders\\V1\\Rest\\Orders\\OrdersRepository');
     	$ordersService = $services->get('CodeOrders\\V1\\Rest\\Orders\\OrdersService');
-        return new OrdersResource($ordersRepository, $ordersService);
+    	$userService = $services->get('CodeOrders\\V1\\Rest\\Users\\UsersService');
+        return new OrdersResource($ordersRepository, $ordersService, $userService);
     }
 }
